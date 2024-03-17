@@ -3,7 +3,7 @@ from typing import List
 
 
 def check_field_types(json_file_path, expected_fields):
-    with open(json_file_path, "r") as file:
+    with open(json_file_path, "r", encoding="utf8") as file:
         data = json.load(file)
     # check len of the data
     assert len(data) > 500, f"Expected at least 1000 movies, but got {len(data)}"
@@ -29,17 +29,17 @@ expected_fields = {
     "budget": str,
     "gross_worldwide": str,
     "rating": str,
-    "directors": List[str],
-    "writers": List[str],
-    "stars": List[str],
-    "related_links": List[str],
-    "genres": List[str],
-    "languages": List[str],
-    "countries_of_origin": List[str],
-    "summaries": List[str],
-    "synopsis": List[str],
-    "reviews": List[List[str]],
+    "directors": List,
+    "writers": List,
+    "stars": List,
+    "related_links": List,
+    "genres": List,
+    "languages": List,
+    "countries_of_origin": List,
+    "summaries": List,
+    "synopsis": List,
+    "reviews": List,
 }
 
-json_file_path = "../IMDB_crawled.json"
+json_file_path = "../core/IMDB_crawled.json"
 check_field_types(json_file_path, expected_fields)
