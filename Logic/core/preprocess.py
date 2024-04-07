@@ -21,7 +21,7 @@ class Preprocessor:
 
         Returns
         ----------
-        str
+        List[str]
             The preprocessed documents.
         """
          # TODO
@@ -112,4 +112,3 @@ class Preprocessor:
         """
         # TODO
         return
-
