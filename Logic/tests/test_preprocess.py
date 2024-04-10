@@ -1,4 +1,4 @@
-from Logic.core.preprocess import Preprocessor
+from Logic.core.preprocess.preprocess import Preprocessor
 print("start the preprocess test")
 pp = Preprocessor(
     ["Being one of the most anticipated movies of the year, this, that!",
@@ -7,5 +7,5 @@ pp = Preprocessor(
      "Email us at info@thegreatadventure.com for more details.",
      "This film, directed by Jane Doe, showcases the journey of a lifetime,",
      "being both thrilling and emotionally captivating.",
-     "Should you watch it? Absolutely, without a doubt!"], "../core/stopwords.txt")
+     "Should you watch it? Absolutely, without a doubt!"], "../core/preprocess/stopwords.txt")
 print(pp.preprocess())

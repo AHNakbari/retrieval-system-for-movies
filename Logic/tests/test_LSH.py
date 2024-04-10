@@ -4,13 +4,13 @@ import json
 
 def read_docs_from_json():
     try:
-        with open('../core/LSHFakeData.json', 'r') as f:
+        with open('../core/lsh/LSHFakeData.json', 'r') as f:
             data = json.load(f)
     except FileNotFoundError:
         print("LSHFakeData.json not found, initializing an empty list or dict.")
         data = {}
     try:
-        with open('../core/LSHFakeData.json', 'r') as f:
+        with open('../core/lsh/LSHFakeData.json', 'r') as f:
             data.extend(json.load(f))
     except FileNotFoundError:
         print("LSHFakeData.json not found, initializing an empty list or dict.")
