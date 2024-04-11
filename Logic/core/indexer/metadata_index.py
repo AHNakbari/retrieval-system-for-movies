@@ -30,7 +30,7 @@ class Metadata_index:
         Creates the metadata index.
         """
         metadata_index = {}
-        metadata_index['averge_document_length'] = {
+        metadata_index['average_document_length'] = {
             'stars': self.get_average_document_field_length('stars'),
             'genres': self.get_average_document_field_length('genres'),
             'summaries': self.get_average_document_field_length('summaries')
