@@ -55,7 +55,7 @@ def search_handling(
 
         if corrected_query != search_term:
             st.warning(f"Your search terms were corrected to: {corrected_query}")
-            search_term = corrected_query
+            # search_term = corrected_query
 
         with st.spinner("Searching..."):
             time.sleep(0.5)  # for showing the spinner! (can be removed)
