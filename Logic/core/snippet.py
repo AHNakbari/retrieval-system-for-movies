@@ -9,6 +9,8 @@ class Snippet:
             The number of words on each side of the query word in the doc to be presented in the snippet.
         """
         self.number_of_words_on_each_side = number_of_words_on_each_side
+        with open("../core/preprocess/stopwords.txt", 'r') as file:
+            self.stopwords = set(file.read().splitlines())
 
     def remove_stop_words_from_query(self, query):
         """
@@ -25,9 +27,9 @@ class Snippet:
             The query without stop words.
         """
 
-        # TODO: remove stop words from the query.
-
-        return
+        words = query.split()
+        filtered_words = [word for word in words if word.lower() not in self.stopwords]
+        return " ".join(filtered_words)
 
     def find_snippet(self, doc, query):
         """
@@ -48,9 +50,26 @@ class Snippet:
         not_exist_words : list
             Words in the query which don't exist in the doc.
         """
-        final_snippet = ""
-        not_exist_words = []
+        query = self.remove_stop_words_from_query(query)
+        query_words = set(query.split())
+        doc_words = doc.split()
+        indices = [i for i, word in enumerate(doc_words) if word.strip('.,!?').lower() in query_words]
 
-        # TODO: Extract snippet and the tokens which are not present in the doc.
+        if not indices:
+            return "", list(query_words)
+
+        snippets = []
+        for index in indices:
+            start = max(index - self.number_of_words_on_each_side, 0)
+            end = min(index + self.number_of_words_on_each_side + 1, len(doc_words))
+            snippet = ' '.join(doc_words[start:end])
+            snippets.append(snippet)
+
+        final_snippet = " ... ".join(snippets)
+        for word in query_words:
+            final_snippet = final_snippet.replace(word, f"***{word}***")
+
+        not_exist_words = [word for word in query_words if word.lower() not in doc.lower()]
 
         return final_snippet, not_exist_words
+
