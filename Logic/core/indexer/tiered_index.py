@@ -61,7 +61,15 @@ class Tiered_index:
         first_tier = {}
         second_tier = {}
         third_tier = {}
-        #TODO
+        for term, postings in current_index.items():
+            doc_freq = len(postings)
+            if doc_freq > first_tier_threshold:
+                first_tier[term] = postings
+            elif doc_freq > second_tier_threshold:
+                second_tier[term] = postings
+            else:
+                third_tier[term] = postings
+
         return {
             "first_tier": first_tier,
             "second_tier": second_tier,

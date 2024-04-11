@@ -22,6 +22,13 @@ class Preprocessor:
             self.stopwords = set(file.read().splitlines())
         self.stemmer = PorterStemmer()
 
+    def preprocess_pipline(self, text: str):
+        normalized_text = self.normalize(text)
+        no_links_text = self.remove_links(normalized_text)
+        no_punctuations_text = self.remove_punctuations(no_links_text)
+        tokenized_text = self.tokenize(no_punctuations_text)
+        return self.remove_stopwords(list(tokenized_text))
+
     def preprocess(self):
         """
         Preprocess the text using the methods in the class.
@@ -32,13 +39,29 @@ class Preprocessor:
             The preprocessed documents.
         """
         preprocessed_docs = []
+
         for doc in self.documents:
-            normalized_text = self.normalize(doc)
-            no_links_text = self.remove_links(normalized_text)
-            no_punctuations_text = self.remove_punctuations(no_links_text)
-            tokenized_text = self.tokenize(no_punctuations_text)
-            cleaned_text = self.remove_stopwords(list(tokenized_text))
-            preprocessed_docs.append(cleaned_text)
+            doc_id = doc.get('id')
+            if not doc_id:
+                continue
+
+            stars_list = []
+            for star in doc.get('stars', []):
+                stars_list.extend(self.preprocess_pipline(star))
+            doc['stars'] = stars_list
+
+            genres_list = []
+            for genre in doc.get('genres', []):
+                genres_list.extend(self.preprocess_pipline(genre))
+            doc['genres'] = genres_list
+
+            summaries_list = []
+            for summary in doc.get('summaries', []):
+                summaries_list.extend(self.preprocess_pipline(summary))
+            doc['summaries'] = summaries_list
+
+            preprocessed_docs.append(doc)
+
         return preprocessed_docs
 
     def normalize(self, text: str):
