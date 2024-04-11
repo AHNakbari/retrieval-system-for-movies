@@ -20,4 +20,4 @@ git fetch --all
 ```
 
 ## General Structure
-The project contains 2 main modules: [Logic](./Logic/README.md) and [UI](./UI/README.md). The `Logic` module is responsible for doing the main tasks of the project and the `UI` module is responsible for providing a user interface for the user to interact with the system. In each task, you will be told to implement a part or a whole file in one of these modules. Please read the comments for each file and functions inside it to understand what you need to do.
+The project contains 2 main modules: [Logic](./Logic/README.md) and [UI](UI/README.md). The `Logic` module is responsible for doing the main tasks of the project and the `UI` module is responsible for providing a user interface for the user to interact with the system. In each task, you will be told to implement a part or a whole file in one of these modules. Please read the comments for each file and functions inside it to understand what you need to do.

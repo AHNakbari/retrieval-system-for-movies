@@ -4,8 +4,6 @@ import string
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 
-nltk.download('punkt')
-
 class Preprocessor:
 
     def __init__(self, documents: list, stopword_file_path: str):

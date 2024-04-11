@@ -3,7 +3,7 @@ import json
 
 
 class Index_reader:
-    def __init__(self,path: str, index_name: Indexes, index_type: Index_types = None):
+    def __init__(self, path: str, index_name: Indexes, index_type: Index_types = None):
         """
         Initializes the Index_reader.
 
@@ -36,6 +36,6 @@ class Index_reader:
             absolute_path = absolute_path + "_" + self.index_type.value
 
         absolute_path = absolute_path + "_index.json"
-        
+
         with open(absolute_path, 'r', encoding="utf-8") as file:
             return json.load(file)

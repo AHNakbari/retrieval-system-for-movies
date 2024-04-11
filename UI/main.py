@@ -1,15 +1,15 @@
 import streamlit as st
 import sys
-
-sys.path.append("../")
+import os
+print("Current working directory:", os.getcwd())
 from Logic import utils
 import time
 from enum import Enum
 import random
 from Logic.core.snippet import Snippet
-
 snippet_obj = Snippet(
-    number_of_words_on_each_side=5
+    number_of_words_on_each_side=5,
+    path="Logic/core/preprocess/stopwords.txt"
 )  # You can change this parameter, if needed.
 
 

@@ -1,5 +1,5 @@
 class Snippet:
-    def __init__(self, number_of_words_on_each_side=5):
+    def __init__(self, number_of_words_on_each_side=5, path: str = "../core/preprocess/stopwords.txt"):
         """
         Initialize the Snippet
 
@@ -9,7 +9,7 @@ class Snippet:
             The number of words on each side of the query word in the doc to be presented in the snippet.
         """
         self.number_of_words_on_each_side = number_of_words_on_each_side
-        with open("../core/preprocess/stopwords.txt", 'r') as file:
+        with open(path, 'r') as file:
             self.stopwords = set(file.read().splitlines())
 
     def remove_stop_words_from_query(self, query):

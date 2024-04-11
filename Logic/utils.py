@@ -3,19 +3,20 @@ from Logic.core.search import SearchEngine
 from Logic.core.spell_correction import SpellCorrection
 from Logic.core.snippet import Snippet
 from Logic.core.indexer.indexes_enum import Indexes, Index_types
+import string
 import json
 
 try:
-    with open('../core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
+    with open('Logic/core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
         data = json.load(f)
 except FileNotFoundError:
     print("IMDB_crawled.json not found, initializing an empty list or dict.")
     data = {}
 movies_dataset = data
-search_engine = SearchEngine()
+search_engine = SearchEngine('Logic/core')
 
 
-def correct_text(text: str, all_documents: List[str]) -> str:
+def correct_text(text: str, all_documents: List[dict]) -> str:
     """
     Correct the give query text, if it is misspelled using Jacard similarity
 
@@ -30,7 +31,15 @@ def correct_text(text: str, all_documents: List[str]) -> str:
     str
         The corrected form of the given text
     """
-    spell_correction_obj = SpellCorrection(all_documents)
+    all_documents_string = list()
+    for movie in all_documents:
+        all_documents_string.extend(movie['stars'])
+        all_documents_string.extend(movie['genres'])
+        all_documents_string.extend(movie['summaries'])
+
+    for idx, term in enumerate(all_documents_string):
+        all_documents_string[idx] = term.translate(str.maketrans('', '', string.punctuation))
+    spell_correction_obj = SpellCorrection(all_documents_string)
     text = spell_correction_obj.spell_check(text)
     return text
 
@@ -93,22 +102,17 @@ def get_movie_by_id(id: str, movies_dataset: List[Dict[str, str]]) -> Dict[str, 
     dict
         The movie with the given id
     """
-    result = movies_dataset.get(
-        id,
-        {
-            "Title": "This is movie's title",
-            "Summary": "This is a summary",
-            "URL": "https://www.imdb.com/title/tt0111161/",
-            "Cast": ["Morgan Freeman", "Tim Robbins"],
-            "Genres": ["Drama", "Crime"],
-            "Image_URL": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg",
-        },
-    )
+    result = {}
+    for movie in movies_dataset:
+        if movie['id'] == id:
+            result = movie
+            break
 
     result["Image_URL"] = (
-        "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg"  # a default picture for selected movies
+        "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg"
+
     )
     result["URL"] = (
-        f"https://www.imdb.com/title/{result['id']}"  # The url pattern of IMDb movies
+        f"https://www.imdb.com/title/{result['id']}"
     )
     return result

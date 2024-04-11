@@ -7,27 +7,28 @@ from Logic.core.scorer import Scorer
 
 
 class SearchEngine:
-    def __init__(self):
+    def __init__(self, base_path: str = '../core'):
         """
         Initializes the search engine.
         """
-        path = '../core/indexer/index/'
+        self.index_path = base_path + "/indexer/index/"
+        self.stopword_path = base_path + "/preprocess/stopwords.txt"
         self.document_indexes = {
-            Indexes.STARS: Index_reader(path, Indexes.STARS),
-            Indexes.GENRES: Index_reader(path, Indexes.GENRES),
-            Indexes.SUMMARIES: Index_reader(path, Indexes.SUMMARIES)
+            Indexes.STARS: Index_reader(self.index_path, Indexes.STARS),
+            Indexes.GENRES: Index_reader(self.index_path, Indexes.GENRES),
+            Indexes.SUMMARIES: Index_reader(self.index_path, Indexes.SUMMARIES)
         }
         self.tiered_index = {
-            Indexes.STARS: Index_reader(path, Indexes.STARS, Index_types.TIERED),
-            Indexes.GENRES: Index_reader(path, Indexes.GENRES, Index_types.TIERED),
-            Indexes.SUMMARIES: Index_reader(path, Indexes.SUMMARIES, Index_types.TIERED)
+            Indexes.STARS: Index_reader(self.index_path, Indexes.STARS, Index_types.TIERED),
+            Indexes.GENRES: Index_reader(self.index_path, Indexes.GENRES, Index_types.TIERED),
+            Indexes.SUMMARIES: Index_reader(self.index_path, Indexes.SUMMARIES, Index_types.TIERED)
         }
         self.document_lengths_index = {
-            Indexes.STARS: Index_reader(path, Indexes.STARS, Index_types.DOCUMENT_LENGTH),
-            Indexes.GENRES: Index_reader(path, Indexes.GENRES, Index_types.DOCUMENT_LENGTH),
-            Indexes.SUMMARIES: Index_reader(path, Indexes.SUMMARIES, Index_types.DOCUMENT_LENGTH)
+            Indexes.STARS: Index_reader(self.index_path, Indexes.STARS, Index_types.DOCUMENT_LENGTH),
+            Indexes.GENRES: Index_reader(self.index_path, Indexes.GENRES, Index_types.DOCUMENT_LENGTH),
+            Indexes.SUMMARIES: Index_reader(self.index_path, Indexes.SUMMARIES, Index_types.DOCUMENT_LENGTH)
         }
-        self.metadata_index = Index_reader(path, Indexes.DOCUMENTS, Index_types.METADATA)
+        self.metadata_index = Index_reader(self.index_path, Indexes.DOCUMENTS, Index_types.METADATA)
 
     def search(self, query, method, weights, safe_ranking=True, max_results=10):
         """
@@ -53,7 +54,7 @@ class SearchEngine:
             A list of tuples containing the document IDs and their scores sorted by their scores.
         """
 
-        preprocessor = Preprocessor([query], "../core/preprocess/stopwords.txt")
+        preprocessor = Preprocessor([query], self.stopword_path)
         query = preprocessor.preprocess_pipline(query)
 
         scores = {}
@@ -181,12 +182,11 @@ class SearchEngine:
 if __name__ == '__main__':
     search_engine = SearchEngine()
     query = "spider man in wonderland"
-    method = "lnc.ltc"
+    method = "OkapiBM25"
     weights = {
         Indexes.STARS: 1,
         Indexes.GENRES: 1,
         Indexes.SUMMARIES: 1
     }
     result = search_engine.search(query, method, weights)
-
     print(result)
