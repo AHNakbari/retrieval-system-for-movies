@@ -25,19 +25,22 @@ weights = {
         Indexes.GENRES: 1,
         Indexes.SUMMARIES: 1
 }
-predicted_list_for_spider_man = search.search("spider man", "OkapiBM25", weights, True, 5)
-predicted_list_for_spider_man = [movie[0] for movie in predicted_list_for_spider_man]
 
-predicted_list_for_dark_knight = search.search("dark knight", "OkapiBM25", weights, True, 3)
-predicted_list_for_dark_knight = [movie[0] for movie in predicted_list_for_dark_knight]
 
-predicted_list_for_iron_man = search.search("iron man", "OkapiBM25", weights, True, 4)
-predicted_list_for_iron_man = [movie[0] for movie in predicted_list_for_iron_man]
+def run_test_evaluation():
+    predicted_list_for_spider_man = search.search("spider man", "OkapiBM25", weights, True, 5)
+    predicted_list_for_spider_man = [movie[0] for movie in predicted_list_for_spider_man]
 
-predicted_list_for_harry_potter = search.search("harry potter", "OkapiBM25", weights, True, 5)
-predicted_list_for_harry_potter = [movie[0] for movie in predicted_list_for_harry_potter]
+    predicted_list_for_dark_knight = search.search("dark knight", "OkapiBM25", weights, True, 3)
+    predicted_list_for_dark_knight = [movie[0] for movie in predicted_list_for_dark_knight]
 
-predicted_list = [predicted_list_for_spider_man, predicted_list_for_dark_knight, predicted_list_for_iron_man,
-                  predicted_list_for_harry_potter]
+    predicted_list_for_iron_man = search.search("iron man", "OkapiBM25", weights, True, 4)
+    predicted_list_for_iron_man = [movie[0] for movie in predicted_list_for_iron_man]
 
-evaluation.calculate_evaluation(correct_list, predicted_list)
+    predicted_list_for_harry_potter = search.search("harry potter", "OkapiBM25", weights, True, 5)
+    predicted_list_for_harry_potter = [movie[0] for movie in predicted_list_for_harry_potter]
+
+    predicted_list = [predicted_list_for_spider_man, predicted_list_for_dark_knight, predicted_list_for_iron_man,
+                      predicted_list_for_harry_potter]
+
+    evaluation.calculate_evaluation(correct_list, predicted_list)

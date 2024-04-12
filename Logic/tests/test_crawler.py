@@ -52,4 +52,7 @@ expected_fields = {
 }
 
 json_file_path = "../core/crawler/IMDB_crawled.json"
-check_field_types(json_file_path, expected_fields)
+
+
+def run_crawler_test():
+    check_field_types(json_file_path, expected_fields)

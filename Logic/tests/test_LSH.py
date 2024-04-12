@@ -24,8 +24,6 @@ def read_docs_from_json():
         print("IMDB_crawled.json not found, initializing an empty list or dict.")
         data = {}
 
-
-
     docs = list()
     for movie in data:
         if len(movie["summaries"]) > 0:
@@ -34,8 +32,9 @@ def read_docs_from_json():
     return docs
 
 
-documents = read_docs_from_json()
-lsh = MinHashLSH(documents, 100)
-buckets = lsh.perform_lsh()
-lsh.jaccard_similarity_test(buckets, documents)
+def run_LSH_test():
+    documents = read_docs_from_json()
+    lsh = MinHashLSH(documents, 100)
+    buckets = lsh.perform_lsh()
+    lsh.jaccard_similarity_test(buckets, documents)
 
