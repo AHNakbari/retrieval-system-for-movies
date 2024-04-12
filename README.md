@@ -21,3 +21,17 @@ git fetch --all
 
 ## General Structure
 The project contains 2 main modules: [Logic](./Logic/README.md) and [UI](UI/README.md). The `Logic` module is responsible for doing the main tasks of the project and the `UI` module is responsible for providing a user interface for the user to interact with the system. In each task, you will be told to implement a part or a whole file in one of these modules. Please read the comments for each file and functions inside it to understand what you need to do.
+
+## how to run and test the code
+* first of all it is necessary to download all files. to download them follow these instructions
+    - find **file links** in this path 'Logic/tests/file links'
+    - then go download all links in the file
+    - then place each file in its proper place that mentioned in the text file
+* after first step, now run the python file **test_phase1.py** to test everything in the first phase
+* also to run the UI for first phase pls run these two command in the terminal
+```bash
+$env:PYTHONPATH += ";E:\MIR\Project\MIR-Project"
+```
+```bash
+streamlit run UI\main.py
+```
