@@ -36,6 +36,8 @@ class Preprocessor:
         List[str]
             The preprocessed documents.
         """
+        self.documents = set_empty_instead_none(self.documents)
+
         preprocessed_docs = []
 
         for doc in self.documents:
@@ -56,6 +58,8 @@ class Preprocessor:
             summaries_list = []
             for summary in doc.get('summaries', []):
                 summaries_list.extend(self.preprocess_pipline(summary))
+                for title in doc.get('title', ''):
+                    summaries_list.extend(self.preprocess_pipline(title))
             doc['summaries'] = summaries_list
 
             preprocessed_docs.append(doc)
@@ -150,3 +154,22 @@ class Preprocessor:
         """
         filtered_tokens = [token for token in tokens if token not in self.stopwords]
         return filtered_tokens
+
+
+def set_empty_instead_none(documents: list):
+
+    for doc in documents:
+        doc_id = doc.get('id')
+        if not doc_id:
+            continue
+
+        if not doc.get('stars', []):
+            doc['stars'] = []
+
+        if not doc.get('genres', []):
+            doc['genres'] = []
+
+        if not doc.get('summaries', []):
+            doc['summaries'] = []
+
+    return documents

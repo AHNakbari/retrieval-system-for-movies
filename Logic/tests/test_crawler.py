@@ -18,9 +18,12 @@ def check_field_types(json_file_path, expected_fields):
     assert len(data) >= 1000, f"Expected at least 1000 movies, but got {len(data)}"
 
     # check data types
+    count = 0
+
     for movie in data:
         for field, expected_type in expected_fields.items():
             if field not in movie or movie[field] is None:
+                count += 1
                 print(
                     f'Warning: Expected field {field} not found in movie {movie["id"]}'
                 )
@@ -28,7 +31,8 @@ def check_field_types(json_file_path, expected_fields):
                 assert type_check(
                     movie[field], expected_type
                 ), f'Error: Expected field {field} to be of type {expected_type}, but got {type(movie[field])} in movie {movie["id"]}'
-
+    print(count)
+    print(len(data))
 
 expected_fields = {
     "id": str,

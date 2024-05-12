@@ -1,5 +1,6 @@
 import json
 import string
+from Logic.core.preprocess.preprocess import set_empty_instead_none
 
 
 def create_all_documents():
@@ -11,6 +12,7 @@ def create_all_documents():
         data = {}
 
     all_documents = list()
+    data = set_empty_instead_none(data)
     for movie in data:
         all_documents.extend(movie['stars'])
         all_documents.extend(movie['genres'])

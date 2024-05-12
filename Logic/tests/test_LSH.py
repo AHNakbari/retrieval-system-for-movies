@@ -1,4 +1,5 @@
 from Logic.core.lsh.LSH import MinHashLSH
+from ..core.preprocess.preprocess import set_empty_instead_none
 import json
 
 
@@ -24,6 +25,7 @@ def read_docs_from_json():
         print("IMDB_crawled.json not found, initializing an empty list or dict.")
         data = {}
 
+    data = set_empty_instead_none(data)
     docs = list()
     for movie in data:
         if len(movie["summaries"]) > 0:
