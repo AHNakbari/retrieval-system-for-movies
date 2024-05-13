@@ -1,4 +1,4 @@
-from Logic.core.spell_correction import SpellCorrection, create_all_documents
+from Logic.core.utility.spell_correction import SpellCorrection, create_all_documents
 
 
 def test_spell_correction():

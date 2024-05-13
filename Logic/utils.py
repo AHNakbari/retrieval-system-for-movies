@@ -1,7 +1,7 @@
 from typing import Dict, List
 from Logic.core.search import SearchEngine
-from Logic.core.spell_correction import SpellCorrection
-from Logic.core.snippet import Snippet
+from Logic.core.utility.spell_correction import SpellCorrection
+from Logic.core.utility.snippet import Snippet
 from Logic.core.indexer.indexes_enum import Indexes, Index_types
 import string
 import json
@@ -13,7 +13,7 @@ except FileNotFoundError:
     print("IMDB_crawled.json not found, initializing an empty list or dict.")
     data = {}
 movies_dataset = data
-search_engine = SearchEngine('Logic/core')
+search_engine = SearchEngine('../core')
 
 
 def correct_text(text: str, all_documents: List[dict]) -> str:
@@ -57,18 +57,23 @@ def search(
 
     Parameters
     ---------------------------------------------------------------------------------------------------
+    query:
+        The query text
+
     max_result_count: Return top 'max_result_count' docs which have the highest scores.
                       notice that if max_result_count = -1, then you have to return all docs
 
-    mode: 'detailed' for searching in title and text separately.
-          'overall' for all words, and weighted by where the word appears on.
-
-    where: when mode ='detailed', when we want search query
-            in title or text not both of them at the same time.
-
     method: 'ltn.lnn' or 'ltc.lnc' or 'OkapiBM25'
 
-    preferred_genre: A list containing preference rates for each genre. If None, the preference rates are equal.
+    weights:
+        The list, containing importance weights in the search result for each of these items:
+            Indexes.STARS: weights[0],
+            Indexes.GENRES: weights[1],
+            Indexes.SUMMARIES: weights[2],
+
+    preferred_genre:
+        A list containing preference rates for each genre. If None, the preference rates are equal.
+        (You can leave it None for now)
 
     Returns
     ----------------------------------------------------------------------------------------------------

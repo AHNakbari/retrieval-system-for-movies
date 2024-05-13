@@ -1,4 +1,4 @@
-from Logic.core.snippet import Snippet
+from Logic.core.utility.snippet import Snippet
 
 
 def run_test_snippet():
