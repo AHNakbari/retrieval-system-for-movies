@@ -198,8 +198,20 @@ class SearchEngine:
             The parameter used in some smoothing methods to balance between the document
             probability and the collection probability. Defaults to 0.5.
         """
-        # TODO
-        pass
+        for field in weights:
+            index = self.document_indexes[field].index
+            document_lengths = self.document_lengths_index[
+                field].index if field in self.document_lengths_index else None
+            number_of_documents = self.metadata_index.index['document_count']
+
+            scorer = Scorer(index, number_of_documents)
+            field_scores = scorer.compute_scores_with_unigram_model(query, smoothing_method, document_lengths, alpha,
+                                                                    lamda)
+
+            if field in scores:
+                scores[field] = self.merge_scores(scores[field], field_scores)
+            else:
+                scores[field] = field_scores
 
     def merge_scores(self, scores1, scores2):
         """
@@ -229,11 +241,11 @@ class SearchEngine:
 if __name__ == "__main__":
     search_engine = SearchEngine()
     query = "spider man in wonderland"
-    method = "OkapiBM25"
+    method = "unigram"
     weights = {
-        Indexes.STARS: 1,
-        Indexes.GENRES: 1,
+        Indexes.STARS: 0,
+        Indexes.GENRES: 0,
         Indexes.SUMMARIES: 1
     }
-    result = search_engine.search(query, method, weights)
+    result = search_engine.search(query, method, weights, smoothing_method="bayes")
     print(result)

@@ -268,37 +268,40 @@ class Scorer:
             A dictionary of the document IDs and their scores.
         """
 
-        # TODO
-        pass
+        query_tfs = self.get_query_tfs(query)
+        list_of_documents = self.get_list_of_documents(query)
+        scores = {}
 
-    def compute_score_with_unigram_model(
-        self, query, document_id, smoothing_method, document_lengths, alpha, lamda
-    ):
-        """
-        Calculates the scores for each document based on the unigram model.
+        # Total terms in the collection
+        collection_term_count = sum([sum(doc.values()) for doc in self.index.values()])
 
-        Parameters
-        ----------
-        query : str
-            The query to search for.
-        document_id : str
-            The document to calculate the score for.
-        smoothing_method : str (bayes | naive | mixture)
-            The method used for smoothing the probabilities in the unigram model.
-        document_lengths : dict
-            A dictionary of the document lengths. The keys are the document IDs, and the values are
-            the document's length in that field.
-        alpha : float, optional
-            The parameter used in bayesian smoothing method. Defaults to 0.5.
-        lamda : float, optional
-            The parameter used in some smoothing methods to balance between the document
-            probability and the collection probability. Defaults to 0.5.
+        for document_id in list_of_documents:
+            doc_len = document_lengths.get(document_id, 0) if document_lengths else sum(
+                self.index[term].get(document_id, 0) for term in query)
+            score = 0
+            stop_words = [
+                "a", "an", "and", "are", "as", "at", "be", "by", "for", "from",
+                "has", "he", "in", "is", "it", "its", "of", "on", "that", "the",
+                "to", "was", "were", "will", "with", "I", "you", "they", "we", "your"
+            ]
+            for term in query:
+                if term in stop_words:
+                    continue
+                term_freq_in_doc = self.index.get(term, {}).get(document_id, 0)
+                term_freq_in_coll = sum(self.index.get(term, {}).values())
 
-        Returns
-        -------
-        float
-            The Unigram score of the document for the query.
-        """
+                if smoothing_method == "bayes":
+                    prob_term_given_doc = (term_freq_in_doc + alpha) / (doc_len + alpha * len(self.index))
+                elif smoothing_method == "naive":
+                    prob_term_given_doc = term_freq_in_doc / doc_len if doc_len != 0 else 0
+                elif smoothing_method == "mixture":
+                    prob_term_given_doc = (1 - lamda) * (term_freq_in_doc / doc_len if doc_len != 0 else 0) + lamda * (
+                                term_freq_in_coll / collection_term_count)
+                else:
+                    raise ValueError("Invalid smoothing method")
 
-        # TODO
-        pass
+                score += np.log(prob_term_given_doc) if prob_term_given_doc > 0 else 0
+
+            scores[document_id] = score
+
+        return scores
