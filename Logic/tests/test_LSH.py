@@ -36,7 +36,10 @@ def read_docs_from_json():
 
 def run_LSH_test():
     documents = read_docs_from_json()
+    print("step 1")
     lsh = MinHashLSH(documents, 100)
+    print("step 2")
     buckets = lsh.perform_lsh()
+    print("step 3")
     lsh.jaccard_similarity_test(buckets, documents)
 

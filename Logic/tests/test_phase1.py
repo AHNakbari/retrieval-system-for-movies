@@ -9,7 +9,7 @@ test_crawler.run_crawler_test()
 print("=" * 40)
 print("=" * 40)
 print("LSH: Test the accuracy of the LSH")
-# test_LSH.run_LSH_test()
+test_LSH.run_LSH_test()
 
 print("=" * 40)
 print("=" * 40)
