@@ -1,12 +1,12 @@
 import numpy as np
 from tqdm import tqdm
 
-from ..word_embedding.fasttext_model import FastText
+# from ..word_embedding.fasttext_model import FastText
 
 
 class BasicClassifier:
     def __init__(self):
-        raise NotImplementedError()
+        pass
 
     def fit(self, x, y):
         raise NotImplementedError()

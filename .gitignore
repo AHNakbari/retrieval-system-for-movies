@@ -167,3 +167,8 @@ Logic/core/indexer/index/
 Logic/core/classification/IMDB Dataset.csv
 Logic/core/word_embedding/FastText_model.bin
 Logic/core/word_embedding/train_data.csv
+
+Logic/core/classification/X_train.npy
+Logic/core/classification/X_test.npy
+Logic/core/classification/y_train.npy
+Logic/core/classification/y_test.npy

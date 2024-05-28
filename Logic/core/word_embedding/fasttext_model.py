@@ -9,7 +9,7 @@ from nltk.tokenize import word_tokenize
 from scipy.spatial import distance
 import string
 
-import fasttext_data_loader
+import Logic.core.word_embedding.fasttext_data_loader
 
 # import nltk
 # nltk.download('stopwords')

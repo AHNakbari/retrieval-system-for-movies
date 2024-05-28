@@ -6,14 +6,14 @@ from Logic.core.indexer.indexes_enum import Indexes, Index_types
 import string
 import json
 
-try:
-    with open('Logic/core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
-        data = json.load(f)
-except FileNotFoundError:
-    print("IMDB_crawled.json not found, initializing an empty list or dict.")
-    data = {}
-movies_dataset = data
-search_engine = SearchEngine('../core')
+# try:
+#     with open('Logic/core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
+#         data = json.load(f)
+# except FileNotFoundError:
+#     print("IMDB_crawled.json not found, initializing an empty list or dict.")
+#     data = {}
+# movies_dataset = data
+# search_engine = SearchEngine('../core')
 
 
 def correct_text(text: str, all_documents: List[dict]) -> str:
