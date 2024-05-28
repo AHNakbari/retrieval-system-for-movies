@@ -163,3 +163,7 @@ cython_debug/
 IMDB_crawled.json
 
 Logic/core/indexer/index/
+
+Logic/core/classification/IMDB Dataset.csv
+Logic/core/word_embedding/FastText_model.bin
+Logic/core/word_embedding/train_data.csv

@@ -1,7 +1,10 @@
 import pandas as pd
 from tqdm import tqdm
 from sklearn.preprocessing import LabelEncoder
+from Logic.core.indexer.index_reader import Index_reader
+from Logic.core.indexer.indexes_enum import Indexes
 
+pd.set_option('display.max_columns', None)
 
 class FastTextDataLoader:
     """
@@ -20,7 +23,6 @@ class FastTextDataLoader:
             The path to the file containing movie information.
         """
         self.file_path = file_path
-        pass
 
     def read_data_to_df(self):
         """
@@ -34,7 +36,11 @@ class FastTextDataLoader:
         ----------
             pd.DataFrame: A pandas DataFrame containing movie information (synopses, summaries, reviews, titles, genres).
         """
-        pass
+        corpus = list(Index_reader(self.file_path, Indexes.DOCUMENTS).get_index().values())
+        df = pd.DataFrame(corpus)
+        columns = ["synposis", "summaries", "reviews", "title", "genres"]
+        df = df[columns]
+        return df
 
     def create_train_data(self):
         """
@@ -43,6 +49,27 @@ class FastTextDataLoader:
         Returns:
             tuple: A tuple containing two NumPy arrays: X (preprocessed text data) and y (encoded genre labels).
         """
-        pass
 
+        def clean_column(column):
+            if column:
+                return ' '.join(column)
+            else:
+                return ""
+
+        data = self.read_data_to_df()
+        data['synposis'] = data['synposis'].apply(clean_column)
+        data['summaries'] = data['summaries'].apply(clean_column)
+        data['reviews'] = data['reviews'].apply(lambda x: clean_column([review[0] for review in x]) if x else "")
+        data['title'] = data['title'].apply(lambda x: x if x else "")
+        data['text'] = data['synposis'] + ' ' + data['summaries'] + ' ' + data['reviews'] + ' ' + data['title']
+        X = data['text'].to_numpy()
+        y = data['genres'].values
+        return X, y
+
+
+if __name__ == "__main__":
+    X, y = FastTextDataLoader("../indexer/index/").create_train_data()
+    print(X)
+    print("-"*100)
+    print(y)
 
