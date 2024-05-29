@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader, Dataset
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
-import data_loader
-from basic_classifier import BasicClassifier
+from Logic.core.classification import data_loader
+from .basic_classifier import BasicClassifier
 
 
 class ReviewDataSet(Dataset):

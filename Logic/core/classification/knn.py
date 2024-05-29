@@ -3,8 +3,8 @@ from sklearn.metrics import classification_report
 from tqdm import tqdm
 import pandas as pd
 
-from basic_classifier import BasicClassifier
-import data_loader
+from .basic_classifier import BasicClassifier
+from Logic.core.classification import data_loader
 
 
 class KnnClassifier(BasicClassifier):

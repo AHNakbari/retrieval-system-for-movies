@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
 
-from basic_classifier import BasicClassifier
-import data_loader
+from .basic_classifier import BasicClassifier
+from Logic.core.classification import data_loader
 
 
 class SVMClassifier(BasicClassifier):
