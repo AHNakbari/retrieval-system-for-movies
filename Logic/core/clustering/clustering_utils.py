@@ -10,7 +10,7 @@ from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
 from sklearn.cluster import AgglomerativeClustering
-from dimension_reduction import DimensionReduction
+from .dimension_reduction import DimensionReduction
 from sklearn.metrics import silhouette_score
 from sklearn.metrics import adjusted_rand_score
 from sklearn.cluster import KMeans

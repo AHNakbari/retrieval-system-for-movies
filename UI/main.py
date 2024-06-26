@@ -6,7 +6,7 @@ from Logic import utils
 import time
 from enum import Enum
 import random
-from Logic.core.snippet import Snippet
+from Logic.core.utility.snippet import Snippet
 from Logic.core.link_analysis.analyzer import LinkAnalyzer
 from Logic.core.indexer.index_reader import Index_reader, Indexes
 
