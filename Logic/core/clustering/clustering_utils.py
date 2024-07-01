@@ -15,7 +15,7 @@ from sklearn.metrics import silhouette_score
 from sklearn.metrics import adjusted_rand_score
 from sklearn.cluster import KMeans
 from collections import Counter
-from clustering_metrics import purity_score
+from .clustering_metrics import purity_score
 
 class ClusteringUtils:
 

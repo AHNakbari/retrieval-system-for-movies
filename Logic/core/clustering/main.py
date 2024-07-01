@@ -8,12 +8,12 @@ from sklearn.preprocessing import LabelEncoder
 
 from Logic.core.word_embedding.fasttext_data_loader import FastTextDataLoader
 from Logic.core.word_embedding.fasttext_model import FastText
-from dimension_reduction import DimensionReduction
+from .dimension_reduction import DimensionReduction
 from sklearn.metrics import silhouette_score
 from sklearn.metrics import adjusted_rand_score
 # from .clustering_metrics import ClusteringMetrics
-from clustering_utils import ClusteringUtils
-from clustering_metrics import purity_score
+from .clustering_utils import ClusteringUtils
+from .clustering_metrics import purity_score
 
 
 

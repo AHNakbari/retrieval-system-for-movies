@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Box with Search</title>
+</head>
+<body>
+    <div class="box">
+        <input type="text" class="search-bar" placeholder="Search...">
+        <button class="search-button">Search!</button>
+        <div class="button-group">
+            <button class="advanced-button" onclick="toggleAdvanced()">Advanced Search</button>
+            <button class="advanced-button" onclick="toggleAdvanced()">Query Improvement</button>
+            <button class="advanced-button" onclick="toggleAdvanced()"></button>
+        </div>
+        <div class="advanced-options">
+            <div class="option-group">
+                <div class="option">
+                    <label for="numberInput">Maximum number of results</label>
+                    <input type="number" id="numberInput" class="number-input" min="1">
+                </div>
+                <div class="option">
+                    <label for="selectBox">Search method</label>
+                    <select id="selectBox" class="select-box">
+                        <option value="option1">ltn.lnn</option>
+                        <option value="option1">ltc.lnc</option>
+                        <option value="option2">OkapiBM25</option>
+                        <option value="option3">Unigram</option>
+                    </select>
+                </div>
+            </div>
+            <div class="option-group">
+                <div class="option">
+                    <label for="slider1">Weight of stars in search</label>
+                    <input type="range" id="slider1" class="slider" min="0" max="1" step="0.01" value="1">
+                </div>
+                <div class="option" >
+                    <label for="slider2">Weight of genres in search</label>
+                    <input type="range" id="slider2" class="slider" min="0" max="1" step="0.01" value="1">
+                </div>
+            </div>
+            <div class="option-group">
+                <div class="option">
+                    <label for="slider3">Weight of summary in search</label>
+                    <input type="range" id="slider3" class="slider" min="0" max="1" step="0.01" value="1">
+                </div>
+                <div class="option">
+                    <label for="slider4">Weight of title in search</label>
+                    <input type="range" id="slider4" class="slider" min="0" max="1" step="0.01" value="0">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAdvanced() {
+            var advancedOptions = document.querySelector('.advanced-options');
+            if (advancedOptions.style.display === 'none' || advancedOptions.style.display === '') {
+                advancedOptions.style.display = 'flex';
+                document.querySelector('.box').style.height = '288px'; // Adjust the height as needed
+            } else {
+                advancedOptions.style.display = 'none';
+                document.querySelector('.box').style.height = '85px';
+            }
+        }
+
+    </script>
+</body>
+</html>

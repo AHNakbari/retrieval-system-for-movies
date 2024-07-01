@@ -1,0 +1,244 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a; /* Dark background */
+}
+
+.box {
+    width: 450px;
+    height: 85px;
+    background-color: #262626; /* Darker box */
+    border: 1px solid rgba(255, 153, 0, 0.6); /* Orange border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.63);
+    border-radius: 16px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+    transition: height 0.3s ease;
+}
+
+.search-bar {
+    width: 77%;
+    padding: 8px;
+    margin-right: 3px;
+    margin-top: 1px;
+    margin-bottom: 5px;
+    border: 1px solid #ff9500; /* Orange border */
+    border-radius: 8px;
+    background-color: #333333; /* Dark background */
+    color: #ffffff; /* White text */
+}
+
+.search-button, .advanced-button {
+    padding: 8px 12px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff9900; /* Orange background */
+    color: #1a1a1a; /* Dark text */
+    cursor: pointer;
+}
+
+.advanced-options {
+    display: none;
+    margin-top: 10px;
+    flex-direction: column;
+}
+
+.option-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.advanced-options label {
+    margin-bottom: 5px;
+    color: #ff9900; /* Orange text */
+}
+
+.number-input, .select-box, .slider {
+    padding: 8px;
+    border: 1px solid #ff9900; /* Orange border */
+    border-radius: 8px;
+    background-color: #333333; /* Dark background */
+    color: #ffffff; /* White text */
+    margin-bottom: 1px;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 90%; /* Full-width */
+    height: 8px; /* Specified height */
+    background: #ff9900; /* Orange background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 8px; /* Rounded corners */
+    border-color: white;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Thumb width */
+    height: 15px; /* Thumb height */
+    background: #1a1a1a; /* Dark thumb color */
+    cursor: pointer; /* Cursor on hover */
+    border: 2px solid #ff9900; /* Orange border */
+    border-radius: 50%; /* Rounded thumb */
+}
+
+.slider::-moz-range-thumb {
+    width: 15px; /* Thumb width */
+    height: 15px; /* Thumb height */
+    background: #1a1a1a; /* Dark thumb color */
+    cursor: pointer; /* Cursor on hover */
+    border: 2px solid #ff9900; /* Orange border */
+    border-radius: 50%; /* Rounded thumb */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS */
+.stButton button {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.stButton button:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  color: black
+}
+
+.stButton button:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+  color: black;
+}
+
+.stButton button:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+  color: black
+}
+
+
+.streamlit-expanderContent {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.streamlit-expanderContent {
+    background-color: #f9f9f9; /* Light grey */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.textarea.stTextArea {
+    background-color: #f0f0f0;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.textarea.stTextArea:focus {
+    border-color: #45a049;
+    outline: none;
+}

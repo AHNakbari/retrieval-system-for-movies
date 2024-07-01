@@ -6,14 +6,14 @@ from Logic.core.indexer.indexes_enum import Indexes, Index_types
 import string
 import json
 
-# try:
-#     with open('Logic/core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
-#         data = json.load(f)
-# except FileNotFoundError:
-#     print("IMDB_crawled.json not found, initializing an empty list or dict.")
-#     data = {}
-# movies_dataset = data
-# search_engine = SearchEngine('../core')
+try:
+    with open('Logic/core/crawler/IMDB_crawled.json', 'r', encoding="utf-8") as f:
+        data = json.load(f)
+except FileNotFoundError:
+    print("IMDB_crawled.json not found, initializing an empty list or dict.")
+    data = {}
+movies_dataset = data
+search_engine = SearchEngine('Logic/core')
 
 
 def correct_text(text: str, all_documents: List[dict]) -> str:
@@ -33,9 +33,13 @@ def correct_text(text: str, all_documents: List[dict]) -> str:
     """
     all_documents_string = list()
     for movie in all_documents:
-        all_documents_string.extend(movie['stars'])
-        all_documents_string.extend(movie['genres'])
-        all_documents_string.extend(movie['summaries'])
+        if movie is not None:
+            if movie['stars'] is not None:
+                all_documents_string.extend(movie['stars'])
+            if movie['genres'] is not None:
+                all_documents_string.extend(movie['genres'])
+            if movie['summaries'] is not None:
+                all_documents_string.extend(movie['summaries'])
 
     for idx, term in enumerate(all_documents_string):
         all_documents_string[idx] = term.translate(str.maketrans('', '', string.punctuation))

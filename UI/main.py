@@ -3,18 +3,26 @@ import sys
 import os
 print("Current working directory:", os.getcwd())
 from Logic import utils
+from Logic.core import search
 import time
 from enum import Enum
 import random
 from Logic.core.utility.snippet import Snippet
 from Logic.core.link_analysis.analyzer import LinkAnalyzer
 from Logic.core.indexer.index_reader import Index_reader, Indexes
+from streamlit_extras.stylable_container import stylable_container
 
 snippet_obj = Snippet(
     number_of_words_on_each_side=5,
     path="Logic/core/preprocess/stopwords.txt"
 )  # You can change this parameter, if needed.
 
+# Load CSS file
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css("UI/styles.css")
 
 class color(Enum):
     RED = "#FF0000"
@@ -25,9 +33,24 @@ class color(Enum):
     CYAN = "#00FFFF"
     MAGENTA = "#FF00FF"
 
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #4F5758;
+        color: white;
+    }
+    .stApp {
+        background-color: #4F5758;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 def get_top_x_movies_by_rank(x: int, results: list):
-    path = "../Logic/core/index/"  # Link to the index folder
+    path = "Logic/core/indexer/index/"  # Link to the index folder
     document_index = Index_reader(path, Indexes.DOCUMENTS)
     corpus = []
     root_set = []
@@ -79,6 +102,7 @@ def search_handling(
     lamda,
     filter_button,
     num_filter_results,
+    search_engine,
 ):
     if filter_button:
         if "search_results" in st.session_state:
@@ -142,12 +166,13 @@ def search_handling(
         with st.spinner("Searching..."):
             time.sleep(0.5)  # for showing the spinner! (can be removed)
             start_time = time.time()
-            result = utils.search(
+            print(search_weights)
+            result = search_engine.search(
                 search_term,
-                search_max_num,
                 search_method,
                 search_weights,
-                unigram_smoothing=unigram_smoothing,
+                search_max_num,
+                unigram_smoothing,
                 alpha=alpha,
                 lamda=lamda,
             )
@@ -209,15 +234,47 @@ def search_handling(
 
 def main():
     st.title("Search Engine")
-    st.write(
-        "This is a simple search engine for IMDB movies. You can search through IMDB dataset and find the most relevant movie to your search terms."
+    st.markdown(
+        """
+        <style>
+        .custom-title {
+            color: white;
+            background-color: #8EB5FF;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .custom-text-input {
+            color: white;
+            background-color: #002366;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+        .custom-text-input::placeholder {
+            color: #b0c4de;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="custom-title">This is a simple search engine for IMDB movies. You can search through IMDB dataset and find the most relevant movie to your search terms.</div>',
+        unsafe_allow_html=True
     )
     st.markdown(
-        '<span style="color:yellow">Developed By: MIR Team at Sharif University</span>',
+        '<span style="color:#003BAC">Developed By: MIR Team at Sharif University</span>',
         unsafe_allow_html=True,
     )
 
-    search_term = st.text_input("Seacrh Term")
+    search_term = st.text_input(
+        "Search Term",
+        key="search_term_container",
+        placeholder="Enter your search term here"
+    )
+
     with st.expander("Advanced Search"):
         search_max_num = st.number_input(
             "Maximum number of results", min_value=5, max_value=100, value=10, step=5
@@ -229,7 +286,6 @@ def main():
             value=1.0,
             step=0.1,
         )
-
         weight_genres = st.slider(
             "Weight of genres in search",
             min_value=0.0,
@@ -237,7 +293,6 @@ def main():
             value=1.0,
             step=0.1,
         )
-
         weight_summary = st.slider(
             "Weight of summary in search",
             min_value=0.0,
@@ -246,12 +301,14 @@ def main():
             step=0.1,
         )
         slider_ = st.slider("Select the number of top movies to show", 1, 10, 5)
-
-        search_weights = [weight_stars, weight_genres, weight_summary]
+        search_weights = {
+            Indexes.STARS: weight_stars,
+            Indexes.GENRES: weight_genres,
+            Indexes.SUMMARIES: weight_summary
+        }
         search_method = st.selectbox(
             "Search method", ("ltn.lnn", "ltc.lnc", "OkapiBM25", "unigram")
         )
-
         unigram_smoothing = None
         alpha, lamda = None, None
         if search_method == "unigram":
@@ -286,8 +343,15 @@ def main():
     if "search_results" not in st.session_state:
         st.session_state["search_results"] = []
 
-    search_button = st.button("Search!")
-    filter_button = st.button("Filter movies by ranking")
+    col1, col2 = st.columns(2)
+
+    # Add buttons in separate columns
+    with col1:
+        search_button = st.button("Search!", key="search_button")
+    with col2:
+        filter_button = st.button("Filter movies by ranking", key="filter_button")
+
+    search_engine = search.SearchEngine("Logic/core")
 
     search_handling(
         search_button,
@@ -300,6 +364,7 @@ def main():
         lamda,
         filter_button,
         slider_,
+        search_engine
     )
 
 
